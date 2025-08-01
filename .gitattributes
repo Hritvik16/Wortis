@@ -1,0 +1,2 @@
+Build/Wortis.data filter=lfs diff=lfs merge=lfs -text
+Build/Wortis.wasm filter=lfs diff=lfs merge=lfs -text
