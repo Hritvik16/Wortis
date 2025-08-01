@@ -1,14 +1,3 @@
 # Ignore large Unity WebGL build files that are uploaded to GitHub Releases
-Build/Wortis.data
-Build/Wortis.wasm
-
-# Optional: If you name the build differently in future
-# Build/*.data
-# Build/*.wasm
-
-# Keep all other WebGL files (JS, HTML, framework, loader, etc.)
-!Build/
-!Build/*.js
-!Build/*.framework.js
-!Build/*.loader.js
-!index.html
+Build/*.data
+Build/*.wasm
