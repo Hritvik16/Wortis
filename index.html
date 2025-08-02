@@ -57,17 +57,27 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/Wortis.loader.js";
+      var loaderUrl = buildUrl + "/Wortis.loader.js"; // assuming you serve this locally
+
       var config = {
-        dataUrl: buildUrl + "/Wortis.data",
+        dataUrl: "https://github.com/Hritvik16/Wortis/releases/download/V0.1/Wortis.data",
         frameworkUrl: buildUrl + "/Wortis.framework.js",
-        codeUrl: buildUrl + "/Wortis.wasm",
+        codeUrl: "https://github.com/Hritvik16/Wortis/releases/download/V0.1/Wortis.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "My project",
         productVersion: "0.1",
         showBanner: unityShowBanner,
+
+        // Optional, helps locate files (if needed)
+        locateFile: function(filename) {
+          if (filename === "Wortis.data" || filename === "Wortis.wasm") {
+            return "https://github.com/Hritvik16/Wortis/releases/download/V0.1/" + filename;
+          }
+          return buildUrl + "/" + filename;
+        },
       };
+
 
       // By default, Unity keeps WebGL canvas render target size matched with
       // the DOM size of the canvas element (scaled by window.devicePixelRatio)
