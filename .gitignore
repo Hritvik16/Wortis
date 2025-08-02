@@ -1,2 +1,4 @@
 # Ignore large Unity WebGL build files that are uploaded to GitHub Releases
-.DS_Store
+.DS_StoreBuild/*.data
+Build/*.wasm
+Build/*.js
