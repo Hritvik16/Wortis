@@ -9,7 +9,9 @@
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #231F20"></canvas>
     <script src="Build/Wortis.loader.js"></script>
     <script>
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+      if (isMobile) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
         meta.name = 'viewport';
@@ -25,7 +27,7 @@
 
       }
 
-      createUnityInstance(document.querySelector("#unity-canvas"), {
+      var unityConfig = {
         arguments: [],
         dataUrl: "Build/Wortis.data",
         frameworkUrl: "Build/Wortis.framework.js",
@@ -35,8 +37,15 @@
         productName: "Wortis",
         productVersion: "0.1",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-      }).then((unityInstance) => {
+      };
+
+      if (isMobile) {
+        // 3x/4x phone screens cost 2.25x-4x the fill rate for very little
+        // visible sharpness gain. 2x still looks crisp and stays much cooler.
+        unityConfig.devicePixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      }
+
+      createUnityInstance(document.querySelector("#unity-canvas"), unityConfig).then((unityInstance) => {
       }).catch((message) => {
         alert(message);
       });
