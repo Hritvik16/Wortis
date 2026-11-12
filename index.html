@@ -3,13 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | My project</title>
+    <title>Unity Web Player | Wortis</title>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" width=960 height=600 tabindex="-1" style="width: 960px; height: 600px; background: #231F20"></canvas>
     <script src="Build/Wortis.loader.js"></script>
     <script>
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+      if (isMobile) {
         // Mobile device style: fill the whole browser client area with the game canvas:
         var meta = document.createElement('meta');
         meta.name = 'viewport';
@@ -22,18 +24,30 @@
         canvas.style.position = "fixed";
 
         document.body.style.textAlign = "left";
+
       }
 
-      createUnityInstance(document.querySelector("#unity-canvas"), {
+      var unityConfig = {
+        arguments: [],
         dataUrl: "Build/Wortis.data",
         frameworkUrl: "Build/Wortis.framework.js",
         codeUrl: "Build/Wortis.wasm",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "My project",
+        companyName: "Wortis",
+        productName: "Wortis",
         productVersion: "0.1",
         // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      };
+
+      if (isMobile) {
+        // 3x/4x phone screens cost 2.25x-4x the fill rate for very little
+        // visible sharpness gain. 2x still looks crisp and stays much cooler.
+        unityConfig.devicePixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      }
+
+      createUnityInstance(document.querySelector("#unity-canvas"), unityConfig).then((unityInstance) => {
+      }).catch((message) => {
+        alert(message);
       });
     </script>
   </body>
